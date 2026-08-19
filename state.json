@@ -1,0 +1,9 @@
+{
+  "confirmed_state": "empty",
+  "last_raw": false,
+  "consecutive": 0,
+  "action": "none",
+  "splits_on_before": {},
+  "off_sent_at": null,
+  "last_commit_at": null
+}
