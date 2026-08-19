@@ -24,7 +24,9 @@ def get_status() -> dict:
         raise RuntimeError(f"Shelly status error: {payload}")
 
     status = payload["data"]["device_status"]
-    sw_closed = bool(status["inputs"][0]["input"])
+    # Boya con lógica invertida: en reposo (garrafa vacía) el input está a 1 (ON),
+    # y pasa a 0 (OFF) cuando el flotador sube (garrafa llena).
+    sw_closed = not bool(status["inputs"][0]["input"])
     power_w = float(status["meters"][0]["power"])
     relay_on = bool(status["relays"][0]["ison"])
     return {"sw_closed": sw_closed, "power_w": power_w, "relay_on": relay_on}
