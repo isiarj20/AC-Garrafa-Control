@@ -15,8 +15,6 @@ STANDBY_POWER_W = 15           # por debajo de esto, consideramos las unidades r
 RELAY_BOOT_GRACE_SECONDS = 45  # espera a que los adaptadores wifi arranquen tras un fallback
 KEEPALIVE_DAYS = 40            # commit trivial si no ha habido actividad real en este tiempo
 
-print(f"email len={len(os.environ['MELCLOUD_EMAIL'])} pass len={len(os.environ['MELCLOUD_PASSWORD'])}")
-
 def now() -> dt.datetime:
     return dt.datetime.now(dt.timezone.utc)
 
