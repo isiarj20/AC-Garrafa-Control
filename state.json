@@ -1,12 +1,12 @@
 {
   "confirmed_state": "full",
-  "last_raw": true,
+  "last_raw": false,
   "consecutive": 1,
-  "action": "off_sent",
+  "action": "confirmed_off",
   "splits_on_before": {
     "274055": true,
     "273850": false
   },
   "off_sent_at": "2026-08-19T21:33:58.587903+00:00",
-  "last_commit_at": "2026-08-19T21:33:58.587923+00:00"
+  "last_commit_at": "2026-08-19T22:00:04.198617+00:00"
 }
