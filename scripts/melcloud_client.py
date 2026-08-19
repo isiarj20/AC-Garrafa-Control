@@ -31,7 +31,7 @@ def login() -> str:
     )
     resp.raise_for_status()
     data = resp.json()
-    if data.get("ErrorId") is not None:
+    if not data.get("LoginData"):
         raise RuntimeError(f"MELCloud login failed: {data}")
     return data["LoginData"]["ContextKey"]
 
