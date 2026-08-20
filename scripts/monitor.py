@@ -65,13 +65,18 @@ def handle_empty_confirmed(state: dict, shelly_status: dict) -> dict:
 
     context_key = melcloud.login()
     devices = melcloud.list_ata_devices(context_key)
-    by_id = {d["device_id"]: d for d in devices}
+    by_id = {str(d["device_id"]): d for d in devices}
 
 
     for device_id, was_on in state["splits_on_before"].items():
-        if was_on and device_id in by_id:
-            d = by_id[device_id]
-            melcloud.set_power(context_key, device_id, d["building_id"], power_on=True)
+    if was_on and str(device_id) in by_id:
+        d = by_id[str(device_id)]
+        melcloud.set_power(
+            context_key,
+            int(device_id),
+            d["building_id"],
+            power_on=True
+        )
 
 
     state["action"] = "none"
