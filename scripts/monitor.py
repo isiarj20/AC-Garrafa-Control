@@ -23,7 +23,7 @@ def handle_fill_confirmed(state: dict) -> dict:
     context_key = melcloud.login()
     devices = melcloud.list_ata_devices(context_key)
 
-    state["splits_on_before"] = {d["device_id"]: d["power"] for d in devices}
+    state["splits_on_before"] = {str(d["device_id"]): d["power"] for d in devices}
     for d in devices:
         if d["power"]:
             melcloud.set_power(context_key, d["device_id"], d["building_id"], power_on=False)
@@ -52,12 +52,20 @@ def handle_empty_confirmed(state: dict, shelly_status: dict) -> dict:
 
     context_key = melcloud.login()
     devices = melcloud.list_ata_devices(context_key)
-    by_id = {d["device_id"]: d for d in devices}
+    by_id = {str(d["device_id"]): d for d in devices}
 
     for device_id, was_on in state["splits_on_before"].items():
-        if was_on and device_id in by_id:
-            d = by_id[device_id]
-            melcloud.set_power(context_key, device_id, d["building_id"], power_on=True)
+    device_id = str(device_id)
+
+    if was_on and device_id in by_id:
+        d = by_id[device_id]
+
+        melcloud.set_power(
+            context_key,
+            d["device_id"],
+            d["building_id"],
+            power_on=True
+        )
 
     state["action"] = "none"
     state["splits_on_before"] = {}
