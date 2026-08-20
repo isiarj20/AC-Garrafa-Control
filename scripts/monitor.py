@@ -51,11 +51,11 @@ def handle_empty_confirmed(state: dict, shelly_status: dict) -> dict:
         time.sleep(RELAY_BOOT_GRACE_SECONDS)
 
     context_key = melcloud.login()
-devices = melcloud.list_ata_devices(context_key)
+    devices = melcloud.list_ata_devices(context_key)
 
-by_id = {str(d["device_id"]): d for d in devices}
+    by_id = {str(d["device_id"]): d for d in devices}
 
-for device_id, was_on in state["splits_on_before"].items():
+    for device_id, was_on in state["splits_on_before"].items():
     device_id = str(device_id)
 
     if was_on and device_id in by_id:
