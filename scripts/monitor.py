@@ -70,15 +70,12 @@ def main() -> None:
     shelly_status = shelly.get_status()
     raw = shelly_status["sw_closed"]
 
-    if raw == state["last_raw"]:
-        state["consecutive"] += 1
-    else:
-        state["last_raw"] = raw
-        state["consecutive"] = 1
-
-    confirmed = state["consecutive"] >= STABLE_READS_NEEDED
-    became_full = confirmed and raw and state["confirmed_state"] == "empty"
-    became_empty = confirmed and not raw and state["confirmed_state"] == "full"
+    # Sin debounce: al sondear solo cada 5 min (mínimo de GitHub Actions), un
+    # toque accidental de un par de segundos casi nunca coincide con un
+    # sondeo, así que actuar sobre la primera lectura ya es seguro y, sobre
+    # todo, rápido.
+    became_full = raw and state["confirmed_state"] == "empty"
+    became_empty = not raw and state["confirmed_state"] == "full"
 
     message = None
 
@@ -86,16 +83,16 @@ def main() -> None:
         state["confirmed_state"] = "full"
         state = handle_fill_confirmed(state)
         message = "Garrafa llena: apagado enviado por MELCloud"
+    elif became_empty:
+        state["confirmed_state"] = "empty"
+        state = handle_empty_confirmed(state, shelly_status)
+        message = "Garrafa vacia: splits restaurados a su estado previo"
     elif state["confirmed_state"] == "full" and state["action"] == "off_sent":
         state = handle_off_pending(state, shelly_status)
         if state["action"] == "confirmed_off":
             message = "Apagado confirmado por caida de consumo"
         elif state["action"] == "relay_fallback":
             message = "Fallback: rele cortado (MELCloud no confirmo a tiempo)"
-    elif became_empty:
-        state["confirmed_state"] = "empty"
-        state = handle_empty_confirmed(state, shelly_status)
-        message = "Garrafa vacia: splits restaurados a su estado previo"
 
     if message is None:
         last_commit = state.get("last_commit_at")
