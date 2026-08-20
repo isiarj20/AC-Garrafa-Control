@@ -7,8 +7,6 @@ STATE_PATH = Path(__file__).resolve().parent.parent / "state.json"
 
 DEFAULT_STATE = {
     "confirmed_state": "empty",   # "empty" | "full"  (estado ya debounced)
-    "last_raw": False,            # última lectura cruda del SW
-    "consecutive": 0,             # lecturas consecutivas iguales a last_raw
     "action": "none",             # "none" | "off_sent" | "confirmed_off" | "relay_fallback"
     "splits_on_before": {},       # {device_id: bool} - foto de qué estaba encendido
     "off_sent_at": None,
