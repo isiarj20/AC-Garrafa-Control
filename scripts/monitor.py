@@ -69,14 +69,14 @@ def handle_empty_confirmed(state: dict, shelly_status: dict) -> dict:
 
 
     for device_id, was_on in state["splits_on_before"].items():
-    if was_on and str(device_id) in by_id:
-        d = by_id[str(device_id)]
-        melcloud.set_power(
-            context_key,
-            int(device_id),
-            d["building_id"],
-            power_on=True
-        )
+        if was_on and str(device_id) in by_id:
+            d = by_id[str(device_id)]
+            melcloud.set_power(
+                context_key,
+                int(device_id),
+                d["building_id"],
+                power_on=True
+            )
 
 
     state["action"] = "none"
