@@ -11,7 +11,6 @@ import shelly_client as shelly
 import state_store
 
 
-STABLE_READS_NEEDED = 1        # lecturas consecutivas iguales antes de actuar (debounce)
 FALLBACK_MINUTES = 10          # si MELCloud no baja el consumo en este tiempo, se corta el relé
 STANDBY_POWER_W = 15           # por debajo de esto, consideramos las unidades realmente apagadas
 RELAY_BOOT_GRACE_SECONDS = 45  # espera a que los adaptadores wifi arranquen tras un fallback
