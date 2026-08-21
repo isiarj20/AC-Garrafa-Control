@@ -26,7 +26,7 @@ def now() -> dt.datetime:
 def handle_fill_confirmed(state: dict) -> dict:
     context_key = melcloud.login()
     devices = melcloud.list_ata_devices(context_key)
-     if not devices:
+    if not devices:
         raise RuntimeError(
             "MELCloud no devolvio ningun split (ListDevices vacio o filtro "
             "DeviceType sin coincidencias) - abortando en vez de fingir exito"
@@ -36,7 +36,6 @@ def handle_fill_confirmed(state: dict) -> dict:
     for d in devices:
         if d["power"]:
             melcloud.set_power(context_key, d["device_id"], d["building_id"], power_on=False)
-
 
     state["action"] = "off_sent"
     state["off_sent_at"] = now().isoformat()
