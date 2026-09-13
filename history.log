@@ -1455,3 +1455,4 @@
 2026-09-13T12:25:33.182574+00:00 raw=False power=3.5W relay_on=True state=empty action=none
 2026-09-13T12:30:58.749964+00:00 raw=False power=3.8W relay_on=True state=empty action=none
 2026-09-13T12:35:34.752463+00:00 raw=False power=424.1W relay_on=True state=empty action=none
+2026-09-13T12:40:42.036650+00:00 raw=False power=501.3W relay_on=True state=empty action=none
