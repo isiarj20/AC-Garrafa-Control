@@ -22,7 +22,7 @@ def login() -> str:
         json={
             "Email": EMAIL,
             "Password": PASSWORD,
-            "Language": 0,
+            "Language": 6,
             "AppVersion": "1.34.4.0",
             "Persist": True,
             "CaptchaResponse": None,
